@@ -1,0 +1,79 @@
+---
+import { Image } from "astro:assets";
+import PricingPoint from "../../assets/pricingPoint.png";
+
+interface CardProps {
+  index: number;
+  title: string;
+  image: string;
+  points: Array<string>;
+  priceMonthly: string;
+  priceYearly: string;
+  isMonthly: boolean;
+}
+
+const { title, image, points, priceMonthly, priceYearly, isMonthly, index } =
+  Astro.props as CardProps;
+// convert image to a string
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/*.{jpeg,jpg,png,gif}"
+);
+---
+
+<div
+  class="flex flex-col relative text-white bg-accent py-6 px-6 rounded-lg shadow-lg space-y-4 w-full"
+>
+  <!-- Absolute div for the image -->
+  <Image
+    class="absolute top-[-70px] left-1/2 transform -translate-x-1/2 w-[130px] h-[135px] rounded-full"
+    src={images[image]()}
+    alt=""
+  />
+
+  <!-- Title -->
+  <p class="text-lg text-center">{title}</p>
+
+  <!-- Divider -->
+  <span class="bg-[#404047] h-[1px] w-full"></span>
+
+  <!-- Points -->
+  <ul class="space-y-4 py-4">
+    {
+      points.map((point) => (
+        <div class="flex flex-row space-x-5 items-center">
+          <>
+            <span class="bg-moon p-2 rounded-md">
+              <Image src={PricingPoint} alt="" />
+            </span>
+            <li class="text-sm">{point}</li>
+          </>
+        </div>
+      ))
+    }
+  </ul>
+
+  <!-- Divider -->
+  <span class="bg-[#404047] h-[1px] w-full"></span>
+
+  <!-- Pricing and Button -->
+  <div class="flex flex-row justify-between items-center w-full">
+    <div
+      class={`monthlyPricing_${index} flex flex-row items-end  lg:mr-10 w-full`}
+    >
+      <p class="text-3xl lg:text-5xl font-semibold">{priceMonthly}</p>
+      <p class="text-sm text-tertiary">/mo</p>
+    </div>
+    <div
+      class={`yearlyPricing_${index} hidden flex-row items-end  lg:mr-10 w-full`}
+    >
+      <p class="text-3xl lg:text-5xl font-semibold">{priceYearly}</p>
+      <p class="text-sm text-tertiary">/yr</p>
+    </div>
+    <button
+      class="bg-gradient-to-r from-gradientStart to-gradientEnd text-white rounded-lg px-3 py-2 lg:px-6 lg:py-3 whitespace-nowrap"
+    >
+      Signup Now
+    </button>
+  </div>
+</div>

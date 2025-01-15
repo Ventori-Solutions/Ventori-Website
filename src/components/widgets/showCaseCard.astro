@@ -1,0 +1,30 @@
+---
+import { Image } from "astro:assets";
+
+
+interface CardProps {
+  title: string;
+  para: string;
+  image: string;
+
+}
+
+const { title, para,image} =
+  Astro.props as CardProps;
+
+  const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/*.{jpeg,jpg,png,gif}",
+);
+---
+
+<div>
+    <div class="card__showcase">
+        <div class="card__showcase__image">        
+            <Image src={images[image]()} alt="" class="object-cover"  />
+        </div>
+        <div class="flex flex-col space-y-1">
+        <h1 class="text-2xl lg:text-3xl font-semibold">{title}</h1>
+        <p class="text-lg font-normal">{para}</p>
+    </div>
+    </div>
+</div>

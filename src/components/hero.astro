@@ -1,0 +1,110 @@
+---
+import { Image } from "astro:assets";
+import Button from "./widgets/button.astro";
+import circle from "../../public/circle.svg";
+
+interface ButtonProps {
+  text: string;
+  icon: string;
+}
+
+interface HeroProps {
+  bg: string;
+  title: string;
+  subtitle: string;
+  button: ButtonProps;
+  heroImage: string;
+  tagline: string;
+  brands: Array<string>;
+}
+
+const { bg, title, subtitle, button, heroImage, tagline, brands } =
+  Astro.props as HeroProps;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/*.{jpeg,jpg,png,gif}"
+);
+---
+
+<section
+  class="flex justify-center items-center h-auto lg:py-20 py-10  relative overflow-clip"
+>
+  <!-- bg -->
+  <div class="absolute inset-0 pointer-events-none -z-[1]" aria-hidden="true">
+    <slot name="bg">
+      {bg ? <Fragment set:html={bg} /> : false}
+    </slot>
+  </div>
+
+  <!-- content -->
+  <div
+    class="lg:w-[75%] max-w-[1440px] w-full lg:px-0 px-4 flex h-full justify-start lg:justify-normal relative z-10"
+  >
+    <!-- Text Section -->
+    <div
+      class="lg:w-1/2 w-full flex flex-col justify-center space-y-6 lg:space-y-12 relative"
+    >
+      <div class="space-y-5">
+        <h1
+          class="text-4xl lg:text-[64px] font-[600] text-white leading-normal lg:leading-[74px] tracking-tight text-center lg:text-left "
+          set:html={title}
+        />
+        <p
+          class="lg:text-[18px] text-white w-full  text-center lg:text-left "
+          set:html={subtitle}
+        />
+
+        <div class="w-full flex justify-center lg:justify-start">
+          <Button text={button.text} icon={button.icon} />
+        </div>
+      </div>
+      <div
+        class="space-y-3 flex  flex-col w-full justify-center items-center lg:items-start"
+      >
+        <h2 class="text-primary text-xl font-semibold">{tagline}</h2>
+        <div
+          class="flex space-x-0 lg:space-x-4 flex-wrap lg:flex-nowrap w-full justify-center lg:justify-start"
+        >
+          {brands.map((brand) => (
+            <Image src={images[brand]()} alt="" class="lg:w-44 w-28" />
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Image Section -->
+    <div class="lg:w-1/2 w-full flex justify-center lg:justify-end absolute lg:static order-last p-4 lg:p-0 left-0  overflow-hidden lg:opacity-100 opacity-40 -z-10">
+      <!-- Outer spinning wrapper -->
+      <div
+        class="lg:w-[580px] w-full h-full lg:h-[580px] flex justify-center items-center rounded-full border-gradient lg:p-2 p-8 outer-circle"
+      >
+        <!-- Inner stationary wrapper -->
+        <div
+          class="lg:w-[470px] w-full h-full lg:h-[470px]  flex justify-center items-center rounded-full border-gradient_2 lg:p-2 p-4 "
+        >
+          <!-- Image -->
+          <Image
+            src={images[heroImage]()}
+            alt=""
+            class="lg:w-[400px] w-full h-full lg:h-[400px]  rounded-full "
+          />
+        </div>
+      </div>
+    </div>
+  
+  
+  
+  
+  </div>
+</section>
+
+
+<style>
+  @media (max-width: 1440px) {
+  .outer-circle {
+    width: 550px; /* Adjusted size for 1440px screen */
+    
+  }
+}
+
+</style>

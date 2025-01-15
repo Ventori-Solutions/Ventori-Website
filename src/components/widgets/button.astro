@@ -1,0 +1,22 @@
+---
+import { Image } from "astro:assets";
+import { twMerge } from 'tailwind-merge'
+import InlineSvg from "./InlineSvg";
+
+interface ButtonProps {
+text: string;
+icon: string;
+variant: string;
+}
+
+const { text, icon ,variant} = Astro.props as ButtonProps;
+---
+
+<div class="flex flex-row items-center">
+<button class={twMerge("space-x-4", variant==='secondary'? 'btn-secondary':'btn')}>
+    <!-- <Image src = {icon} alt="" class="w-8 h-8" width={100} height={100} /> -->
+    <InlineSvg path={icon}  client:load />
+
+    <span class="whitespace-nowrap">{text}</span>
+</button>
+</div>

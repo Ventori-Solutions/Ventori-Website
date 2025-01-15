@@ -1,0 +1,30 @@
+---
+import { Image } from "astro:assets";
+import InlineSvg from "./InlineSvg";
+
+
+interface CardProps {
+  title: string;
+  para: string;
+  image: string;
+
+}
+
+const { title, para,image} =
+  Astro.props as CardProps;
+
+  const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/*.{jpeg,jpg,png,gif}",
+);
+
+---
+<div class="card group">
+  <div class="card-image">
+    <InlineSvg path={image} client:load />
+  </div>
+  <div class="flex flex-col space-y-2">
+    <h1 class="text-[25px] font-medium">{title}</h1>
+    <p class="text-lg font-normal">{para}</p>
+  </div>
+</div>
+

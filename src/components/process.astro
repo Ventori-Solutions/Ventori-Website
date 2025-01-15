@@ -1,0 +1,73 @@
+---
+import { Image } from "astro:assets";
+import pattern from "../assets/process.svg";
+import process from "../assets/process-2.png";
+
+interface CardProps {
+  title: string;
+  para: string;
+  image: string;
+}
+
+interface SectionProps {
+  title: string;
+  subtitle: string;
+  cards: Array<CardProps>;
+}
+
+const { title, subtitle, cards } = Astro.props as SectionProps;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/*.{jpeg,jpg,png,gif}"
+);
+---
+
+<section
+  class="flex justify-center items-center py-10 lg:py-20 w-full h-auto "
+>
+  <!-- content -->
+  <div
+    class="lg:w-[75%] max-w-[1440px] w-full lg:px-0 px-4 flex flex-col h-full items-center space-y-24 relative"
+  >
+    <div
+      class="space-y-4 flex flex-col w-full justify-center items-center relative"
+    >
+      <h2 class="text-3xl font-semibold text-primary" set:html={subtitle} />
+      <h1
+        class="text-4xl lg:text-[64px] font-semibold leading-normal lg:leading-[74px] tracking-tight text-center"
+        set:html={title}
+      />
+    </div>
+
+    <div class="w-full relative">
+      <div class="h-full gap-y-10 grid grid-cols-1 lg:grid-cols-4 w-full">
+        {
+          Array.from({ length: 4 }).map((_, index) => (
+            <Image src={pattern} alt="" class="w-full" />
+          ))
+        }
+      </div>
+
+      <div
+        class="lg:h-auto gap-y-10 h-full w-auto lg:w-full grid grid-cols-1 lg:grid-cols-4 absolute -top-7 lg:-right-10 right-0 left-10"
+      >
+        {
+          cards.map((card, index) => (
+            <Image src={images[card.image]()} alt="" class="w-16 " />
+          ))
+        }
+      </div>
+      <div
+        class="lg:h-auto gap-y-10 h-full w-auto lg:w-full grid grid-cols-1 lg:grid-cols-4 absolute -top-4 lg:-right-28 right-0 left-28"
+      >
+        {cards.map((card, index) => <h1 class="text-2xl">{card.title}</h1>)}
+      </div>
+
+      <div
+        class="lg:h-auto gap-y-10 h-full w-2/3 lg:w-full grid grid-cols-1 lg:grid-cols-4 absolute top-5 lg:right-5 left-0"
+      >
+        {cards.map((card, index) => <p class=" p-8 px-10">{card.para}</p>)}
+      </div>
+    </div>
+  </div>
+</section>

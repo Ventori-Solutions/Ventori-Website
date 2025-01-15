@@ -1,0 +1,60 @@
+---
+import { Image } from "astro:assets";
+import Button from "./widgets/button.astro";
+import ServicesCard from "./widgets/servicesCard.astro";
+
+interface MetricProps {
+  title: string;
+  para: string;
+}
+
+interface ButtonProps {
+  text: string;
+  icon: string;
+}
+
+interface SectionProps {
+  title: string;
+  subtitle: string;
+  para: string;
+  metrics: Array<MetricProps>;
+  image: string;
+  button: ButtonProps;
+}
+
+const { title, subtitle, para, metrics, image, button } =
+  Astro.props as SectionProps;
+  const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/*.{jpeg,jpg,png,gif}",
+);
+---
+
+<section class="flex justify-center items-center h-auto  bg-black lg:py-0 py-10">
+  <!-- content -->
+  <div class="lg:w-[75%] max-w-[1440px] w-full lg:px-0 px-4 flex lg:flex-row flex-col h-full justify-center space-y-8">
+    <div class="w-full lg:w-1/2 flex justify-center items-center p-0 lg:p-6">
+      <Image src={images[image]()} alt="" class="w-full"  />
+    </div>
+    <div class="w-full lg:w-1/2 space-y-4 flex justify-center  flex-col p-0 lg:p-6">
+      <h2 class="text-2xl lg:text-3xl font-semibold text-primary" set:html={subtitle} />
+      <h1
+        class="text-4xl lg:text-[64px] text-white font-semibold leading-normal lg:leading-[74px] tracking-tight"
+        set:html={title}
+      />
+      <p class="text-white" set:html={para} />
+      <div class="flex flex-row space-x-8">
+        {
+          metrics.map((metric) => (
+            <div class="flex flex-col space-y-4">
+              <h1 class="text-primary text-3xl lg:text-5xl font-semibold">
+                {metric.title}
+              </h1>
+              <p class="text-white text-[16px]">{metric.para}</p>
+            </div>
+          ))
+        }
+      </div>
+      <Button text={button.text} icon={button.icon} />
+    </div>
+  </div>
+</section>

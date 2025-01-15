@@ -1,0 +1,55 @@
+---
+import { Image } from "astro:assets";
+import Button from "./widgets/button.astro";
+import ServicesCard from "./widgets/servicesCard.astro";
+
+interface CardProps {
+  title: string;
+  para: string;
+  image: string;
+}
+
+interface SectionProps {
+  title: string;
+  subtitle: string;
+  cards: Array<CardProps>;
+}
+// remove br tag from titleMobile
+
+const { title, subtitle, cards } =
+  Astro.props as SectionProps;
+
+const titleMobile =  title.replace(/<br>/g, " ");
+
+---
+
+<section class="flex justify-center items-center py-10">
+
+  <!-- content -->
+  <div class="lg:w-[75%] max-w-[1440px] w-full lg:px-0 px-4 flex flex-col h-full justify-center items-center space-y-8">
+        <h2 class="text-3xl font-semibold text-primary" set:html={subtitle} />
+      <h1
+        class="hidden lg:flex text-4xl lg:text-[64px] font-semibold  leading-normal lg:leading-[74px] tracking-tight text-center"
+        set:html={title}
+      />
+
+      <h1
+        class="lg:hidden text-[31px] lg:text-[64px] font-semibold  leading-normal lg:leading-[74px] -tracking-tight text-center"
+        set:html={titleMobile}
+      />
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+      {
+        cards.map((card) => (
+          <ServicesCard title={card.title} para={card.para} image={card.image} />
+        ))
+      }
+      </div>
+      
+
+
+      
+
+  </div>
+</section>
+

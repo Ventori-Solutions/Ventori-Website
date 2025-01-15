@@ -1,0 +1,53 @@
+---
+import PricingToggle from "./widgets/pricingToggle.jsx";
+import PricingCard from "./widgets/pricingCard.astro";
+
+interface CardProps {
+  title: string;
+  priceMonthly: string;
+    priceYearly: string;
+    points: Array<string>;
+    image: string;
+
+
+}
+
+interface SectionProps {
+  title: string;
+  subtitle: string;
+  cards: Array<CardProps>;
+}
+
+const { title, cards } =
+  Astro.props as SectionProps;
+---
+
+<section class="flex justify-center items-center py-20 bg-black">
+
+  <!-- content -->
+  <div class="w-[75%] max-w-[1440px] flex flex-col h-full justify-center items-center space-y-16">
+         <div class="flex flex-col lg:flex-row w-full justify-between items-center">
+      <h1
+        class="text-[48px] font-semibold  text-white leading-[74px] tracking-tight text-center"
+        set:html={title}
+      />
+      <PricingToggle client:load/>
+    </div>
+
+    <div class="pricing_card_monthly grid grid-cols-1 lg:grid-cols-3  gap-16 w-full">
+      {
+        cards.map((card, index) => (
+        <PricingCard
+        index={index}
+      title={card.title}
+        priceMonthly={card.priceMonthly}
+        priceYearly={card.priceYearly}
+        points={card.points}
+        image={card.image}
+
+        />
+        ))
+      }
+      </div>
+  </div>
+</section>

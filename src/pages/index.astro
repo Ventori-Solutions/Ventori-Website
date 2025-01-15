@@ -1,0 +1,303 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/hero.astro";
+import Services from "../components/services.astro";
+import AboutUs from "../components/aboutUs.astro";
+import TestimonialSlider from "../components/Testimonial.jsx";
+import Process from "../components/process.astro";
+import FAQ from "../components/Faq.astro";
+import ShowCase from "../components/showcase.astro";
+import Pricing from "../components/pricing.astro";
+import { Image } from "astro:assets";
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/*.{jpeg,jpg,png,gif}"
+);
+---
+
+<Layout>
+  <Hero
+    title="Ready to take your <br><span class='text-primary'>Business Growth</span><br> to the next level?"
+    subtitle="Discover tailored web solutions designed to elevate your online presence and drive measurable results for your business"
+    tagline="Trusted by Leading Brands"
+    button={{
+      text: "Get your Quote",
+      icon: "arrow.svg",
+      variant: "primary",
+    }}
+    heroImage="/src/assets/heroRound.png"
+    brands={[
+      "/src/assets/brand-1.png",
+      "/src/assets/brand-2.png",
+      "/src/assets/brand-3.png",
+      "/src/assets/brand-4.png",
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-black">
+        <Image
+          src={images["/src/assets/hero-bg.png"]()}
+          alt=""
+          class="h-full w-full object-cover opacity-5"
+        />
+      </div>
+    </Fragment>
+  </Hero>
+
+  <Services
+    title="High-impact services<br> for your business"
+    subtitle="Our Services"
+    cards={[
+      {
+        title: "Web Design",
+        para: "We specialize in creating visually stunning, user-friendly websites that align with your brand identity and deliver an exceptional.",
+        image: "service-1.svg",
+      },
+      {
+        title: "Web Relaunch",
+        para: "Refresh your website with our Web Relaunch service, transforming it into a modern, user-friendly platform that reflects your brand and drives results.",
+        image: "service-2.svg",
+      },
+      {
+        title: "SEO",
+        para: "Boost your visibility and drive traffic with our tailored SEO services. From keyword research to on-page optimization and backlink strategies, we’ll help your brand stand out. ",
+        image: "service-3.svg",
+      },
+      {
+        title: "Legal Security",
+        para: "Our team protects your business ensuring full compliance with GDPR, data privacy regulations, and WCAG accessibility standards.",
+        image: "service-4.svg",
+      },
+      {
+        title: "Brand Identity",
+        para: "We create a unique and recognizable identity that reflects your values and sets your brand apart from competitors and resonates with the target audience.",
+        image: "service-5.svg",
+      },
+      {
+        title: "Digital Marketing",
+        para: "Elevate your brand's online presence with our data-driven digital marketing strategies. From ad campaigns to content marketing.",
+        image: "service-6.svg",
+      },
+    ]}
+  />
+
+  <AboutUs
+    title="The core mission behind our work"
+    ,
+    subtitle="About Us"
+    ,
+    para="Empowering businesses with tailored, high-quality web solutions that drive growth and simplify digital success"
+    ,
+    metrics={[
+      {
+        title: "120+",
+        para: "Projects completed",
+      },
+      {
+        title: "+30%",
+        para: "Avg. Increased Traffic",
+      },
+    ]}
+    ,
+    image="/src/assets/about-us.png"
+    button={{
+      text: "Get your Quote",
+      icon: "arrow.svg",
+      variant: "primary",
+    }}
+  />
+
+   
+
+  <Process
+    title="Process that moves<br> things forward"
+    ,
+    subtitle="Process"
+    cards={[
+      {
+        title: "Concept",
+        para: "The ideation process is a crucial phase in the design process where creative thinking and brainstorming",
+        image: "/src/assets/process-1.png",
+      },
+      {
+        title: "Design",
+        para: "Research is a critical component of the design process, helping designers understand the problem",
+        image: "/src/assets/process-2.png",
+      },
+      {
+        title: "Develop",
+        para: "Designing a process involves several key steps to ensure clarity, efficiency, successful implementation",
+        image: "/src/assets/process-3.png",
+      },
+      {
+        title: "Deploy",
+        para: "Testing is a crucial phase in the design process to ensure that the product or system meets the specified requirements",
+        image: "/src/assets/process-4.png",
+      },
+    ]}
+  />
+ 
+  
+  <FAQ
+    title="Frequently Asked Questions"
+    faqs={[
+      {
+        title: "How to use this FAQ?",
+        details:
+          "To get a quote, simply fill out the form on our website or contact us directly. We’ll get back to you with a detailed proposal and pricing information.",
+      },
+      {
+        title: "What are your shipping rates?",
+        details:
+          "To get a quote, simply fill out the form on our website or contact us directly. We’ll get back to you with a detailed proposal and pricing information.",
+      },
+      {
+        title: "What is your refund policy?",
+        details:
+          "To get a quote, simply fill out the form on our website or contact us directly. We’ll get back to you with a detailed proposal and pricing information.",
+      },
+      {
+        title: "How can I track my order?",
+        details:
+          "To get a quote, simply fill out the form on our website or contact us directly. We’ll get back to you with a detailed proposal and pricing information.",
+      },
+      {
+        title: "How to get a quote?",
+        details:
+          "To get a quote, simply fill out the form on our website or contact us directly. We’ll get back to you with a detailed proposal and pricing information.",
+      },
+      {
+        title: "I received the wrong item, what do I do?",
+        details:
+          "To get a quote, simply fill out the form on our website or contact us directly. We’ll get back to you with a detailed proposal and pricing information.",
+      },
+      {
+        title: "Best web design agency ever is?",
+        details:
+          "To get a quote, simply fill out the form on our website or contact us directly. We’ll get back to you with a detailed proposal and pricing information.",
+      },
+      {
+        title: "What are benefits of this template?",
+        details:
+          "To get a quote, simply fill out the form on our website or contact us directly. We’ll get back to you with a detailed proposal and pricing information.",
+      },
+      {
+        title: "How can i order web design services?",
+        details:
+          "To get a quote, simply fill out the form on our website or contact us directly. We’ll get back to you with a detailed proposal and pricing information.",
+      },
+      {
+        title: "How promote the product?",
+        details:
+          "A good design is not only aesthetically pleasing, but also functional. It should be able to solve the problem  good design is not only aesthetically pleasing, but also functional. ",
+      },
+    ]}
+  />
+
+ 
+  <ShowCase
+    title="Recent Showcase"
+    cards={[
+      {
+        title: "Web UI design",
+        para: "Creative  UI design",
+        image: "/src/assets/showcase-1.png",
+      },
+      {
+        title: "To design Digital Strategy",
+        para: "Social Media Marketing",
+        image: "/src/assets/showcase-2.png",
+      },
+      {
+        title: "UI Design",
+        para: "Creative Rebranding for logo",
+        image: "/src/assets/showcase-3.png",
+      },
+      {
+        title: "UI Design",
+        para: "Creative Rebranding for logo",
+        image: "/src/assets/showcase-4.png",
+      },
+    ]}
+    ,
+    button={{
+      text: "Get your Quote",
+      icon: "arrow.svg",
+      variant: "secondary",
+    }}
+  />
+  
+
+  <Pricing
+    title="Pricing"
+    cards={[
+      {
+        title: "Silver Package",
+        priceMonthly: "$40",
+        priceYearly: "$45",
+        points: [
+          "100 + Free Template",
+          "10 Team Members",
+          "Priority Support",
+          "Premium Features",
+          "50 Integrations",
+        ],
+        image: "/src/assets/silverPackage.png",
+      },
+      {
+        title: "Golden Package",
+        priceMonthly: "$80",
+        priceYearly: "$85",
+        points: [
+          "100 + Free Template",
+          "10 Team Members",
+          "Priority Support",
+          "Premium Features",
+          "50 Integrations",
+        ],
+        image: "/src/assets/goldenPackage.png",
+      },
+      {
+        title: "Premium Package",
+        priceMonthly: "$100",
+        priceYearly: "$105",
+        points: [
+          "100 + Free Template",
+          "10 Team Members",
+          "Priority Support",
+          "Premium Features",
+          "50 Integrations",
+        ],
+
+        image: "/src/assets/premiumPackage.png",
+      },
+    ]}
+  />
+  <TestimonialSlider
+    client:load
+    testimonials={[
+      {
+        quote:
+          "Be genuine in your assessment, and provide constructive feedback to benefit both potential customers and the company providing the product or service.",
+        name: "Jacqueline Miller",
+        position: "CEO of an eduport",
+        image: "testimonial-image.png", // Replace with the correct path to the image
+      },
+      {
+        quote:
+          "Don't be genuine in your assessment, and provide constructive feedback to benefit both potential customers and the company providing the product or service.",
+        name: "Jacqueline Hiller",
+        position: "CEO of an eduport",
+        image: "testimonial-image.png", // Replace with the correct path to the image
+      },
+      {
+        quote:
+          "Please be genuine in your assessment, and provide constructive feedback to benefit both potential customers and the company providing the product or service.",
+        name: "Jacqueline Tiller",
+        position: "CEO of an eduport",
+        image: "testimonial-image.png", // Replace with the correct path to the image
+      },
+    ]}
+    ,
+  /> 
+</Layout>

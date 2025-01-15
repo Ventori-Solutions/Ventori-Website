@@ -1,0 +1,93 @@
+---
+import { Image } from "astro:assets";
+import Button from "./button.astro";
+
+interface ButtonProps {
+  text: string;
+  icon: string;
+}
+
+interface LinkProps {
+  url: string;
+  text: string;
+}
+
+interface HeroProps {
+  bg: string;
+  logo: string;
+  button: ButtonProps;
+  links: Array<LinkProps>;
+}
+
+const { bg, button, links, logo } = Astro.props as HeroProps;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/*.{jpeg,jpg,png,gif}"
+);
+---
+
+<header class="w-full flex justify-center items-center py-5 z-30 relative  ">
+  <div class="absolute inset-0 pointer-events-none -z-[1]" aria-hidden="true">
+    <slot name="bg">
+      {bg ? <Fragment set:html={bg} /> : false}
+    </slot>
+  </div>
+  <div class="lg:w-[75%] max-w-[1440px] w-full lg:px-0 px-4 flex flex-row h-full justify-between items-center">
+    <Image src={images[logo]()} alt="Ventori" class="w-36 h-9 z-40" />
+    <nav
+      class="hidden lg:flex flex-row space-x-4 justify-center items-center z-10"
+    >
+      <ul
+        class="flex flex-row space-x-8 justify-center items-center text-white text-xl font-normal"
+      >
+        {
+          links.map((link) => (
+            <li>
+              <a href={link.url}>{link.text}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <!-- Hamburger Button (Mobile) -->
+    <div class="lg:hidden flex items-center z-40">
+      <button id="hamburger-btn" class="text-white text-2xl">
+        &#9776; <!-- Hamburger Icon -->
+      </button>
+    </div>
+
+    <div class="hidden lg:flex">
+      <Button text={button.text} icon={button.icon} />
+    </div>
+  </div>
+
+  <!-- Mobile Menu (Initially Hidden) -->
+  <div
+    id="mobile-menu"
+    class="z-30 lg:hidden absolute top-0 right-0 bg-accent w-full h-screen flex flex-col items-center justify-center space-y-4 text-white text-xl font-normal hidden space-y-8"
+  >
+    <ul class="space-y-8">
+      {
+        links.map((link) => (
+          <li>
+            <a href={link.url} class="hover:text-gray-300">
+              {link.text}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <Button text={button.text} icon={button.icon} />
+  </div>
+</header>
+
+<script>
+  // Handle hamburger menu toggle
+  const hamburgerBtn = document.getElementById("hamburger-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  hamburgerBtn?.addEventListener("click", () => {
+    mobileMenu?.classList.toggle("hidden");
+  });
+</script>

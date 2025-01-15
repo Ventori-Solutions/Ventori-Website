@@ -1,0 +1,78 @@
+---
+import { Image } from "astro:assets";
+import Button from "./widgets/button.astro";
+import ShowCaseCard from "./widgets/showCaseCard.astro";
+
+interface ButtonProps {
+  text: string;
+  icon: string;
+  variant: string;
+}
+interface CardProps {
+  title: string;
+  para: string;
+  image: string;
+  button: ButtonProps;
+}
+
+interface SectionProps {
+  title: string;
+  cards: Array<CardProps>;
+  button: ButtonProps;
+}
+
+const { title, cards, button } = Astro.props as SectionProps;
+---
+
+<section class="flex justify-center items-center py-10">
+  <!-- content -->
+  <div
+    class="lg:w-[75%] max-w-[1440px] w-full lg:px-0 px-4 flex flex-col h-full justify-center items-center lg:space-y-16 space-y-8"
+  >
+    <h1
+      class="text-4xl lg:text-[64px] leading-normal font-semibold lg:leading-[74px] tracking-tight text-center"
+      set:html={title}
+    />
+
+    <div class="w-full flex flex-col-reverse lg:flex-row items-center justify-between space-y-4 space-x-0 lg:space-x-10 lg:space-y-44">
+      <div class="w-full lg:w-1/2 space-y-2 lg:space-y-8 flex flex-col justify-start">
+        <!-- map first 2 cards here  -->
+        {
+          // only map first 2 cards
+          cards
+            .slice(0, 2)
+            .map((card) => (
+              <ShowCaseCard
+                title={card.title}
+                para={card.para}
+                image={card.image}
+              />
+            ))
+        }
+      </div>
+      <div class="lg:w-1/2 w-full space-y-2 lg:space-y-8 flex flex-col justify-end items-end">
+        <!-- add a button here -->
+        <div class="w-full flex justify-end">
+          <Button
+            text={button.text}
+            icon={button.icon}
+            variant={button.variant}
+          />
+        </div>
+        <!-- map last 2 cards here  -->
+        {
+          // only map last 2 cards
+          cards
+            .slice(2, 4)
+            .map((card) => (
+              <ShowCaseCard
+                title={card.title}
+                para={card.para}
+                image={card.image}
+              />
+            ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,115 @@
+---
+import { Image } from "astro:assets";
+import Button from "./button.astro";
+
+interface ButtonProps {
+  text: string;
+  icon: string;
+  title: string;
+}
+
+interface LinkProps {
+  url: string;
+  text: string;
+}
+
+interface LinkColProps {
+  title: string;
+  links: Array<LinkProps>;
+}
+
+interface FooterProps {
+  bg: string;
+  logo: string;
+  para: string;
+  button: ButtonProps;
+  links: Array<LinkColProps>;
+}
+
+interface ExtentedItemProps {
+  title: string;
+  para: string;
+}
+
+interface SocialProps {
+  url: string;
+  icon: string;
+}
+
+interface ExtendedFooterProps {
+  items: Array<ExtentedItemProps>;
+  socials: Array<SocialProps>;
+}
+
+const { bg, button, links, logo, para } = Astro.props as FooterProps;
+const { items, socials } = Astro.props as ExtendedFooterProps;
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/*.{jpeg,jpg,png,gif}",
+);
+---
+
+<footer
+  class="w-full flex flex-col justify-center items-center py-5 bg-black text-white"
+>
+  <div class="lg:w-[75%] max-w-[1440px] w-full lg:px-0 px-4 grid gird-cols-1 lg:grid-cols-6 gap-x-2 h-full justify-between py-10 space-y-4 lg:space-y-0">
+    <div class="flex flex-col space-y-4 col-span-2">
+      <Image
+        src={images[logo]()}
+        alt="Ventori"
+        class="w-56 h-14"
+
+      />
+      <p class="text-lg">{para}</p>
+    </div>
+
+    <div class="col-span-3">
+      <div class="grid grid-cols-3 gap-2">
+        {
+          links.map((linkCol) => (
+            <div class="flex flex-col space-y-4">
+              <h1 class=" text-xl font-semibold">{linkCol.title}</h1>
+              <ul class=" text-[16px] flex flex-col space-y-4">
+                {linkCol.links.map((link) => (
+                  <li>
+                    <a href={link.url}>{link.text}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="flex flex-col space-y-2 col-span-1">
+      <h1 class="text-xl font-semibold">{button.title}</h1>
+      <Button text={button.text} icon={button.icon} />
+    </div>
+  </div>
+
+  <div
+    class="lg:w-[75%] max-w-[1440px] w-full lg:px-0 px-4 grid grid-cols-1 lg:grid-cols-4 gap-x-2  justify-between border-t border-[#F4F4F4] border-opacity-40  py-10 space-y-2 lg:space-y-0"
+  >
+    <div class="col-span-3">
+      <div class="grid grid-cols-1 lg:grid-cols-3">
+      {
+        items.map((item, index) => (
+        <div class={`flex flex-col space-y-4 whitespace-nowrap ${index === 1 ? 'justify-end items-start lg:items-center' : ''}`}>
+          <h1 class="text-xl font-semibold">{item.title}</h1>
+          <p class="text-[16px]">{item.para}</p>
+        </div>
+        ))
+      }
+      </div>
+    </div>
+    <div class="flex flex-row space-x-2 justify-start lg:justify-end items-center">
+      {
+        socials.map((social) => (
+          <a href={social.url} class="bg-white p-2 rounded-full flex justify-center items-center w-10 h-10">
+            <Image src={images[social.icon]()} alt="" class="h-6" />
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</footer>

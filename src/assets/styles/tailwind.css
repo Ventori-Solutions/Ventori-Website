@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .border-gradient {
+    position: relative;
+  }
+  .border-gradient::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    padding: 2px;
+    background: linear-gradient(
+      180deg,
+      rgba(251, 251, 251, 0.4) 0%,
+      rgba(6, 248, 225, 0.4) 53.12%,
+      rgba(100, 204, 197, 0.4) 100%
+    );
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+
+  .border-gradient_2 {
+    position: relative;
+  }
+  .border-gradient_2::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    padding: 2px;
+    /* border:2px; */
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.22) 11.46%,
+      rgba(0, 0, 0, 0.22) 50%,
+      rgba(153, 237, 229, 0.22) 94.27%
+    );
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply flex flex-row items-center justify-around z-20 rounded-full bg-white text-[#0C0C0CE5] font-medium text-center text-[18px] leading-snug transition py-2 px-3  ease-in duration-200 cursor-pointer hover:text-white hover:bg-black hover:shadow-xl shadow-white hover:scale-110;
+  }
+
+  .btn-secondary {
+    @apply flex flex-row items-center justify-around z-20 rounded-full bg-black text-white font-medium text-center text-[18px] leading-snug transition py-2 px-3  ease-in duration-200 cursor-pointer hover:text-black hover:bg-white hover:shadow-xl shadow-black hover:scale-110;
+  }
+
+  .btn svg {
+    @apply bg-black w-7 h-7 rounded-full p-2;
+  }
+
+  .btn:hover svg {
+    @apply bg-white;
+  }
+
+  .btn:hover svg path {
+    @apply stroke-black;
+  }
+
+  .btn-secondary svg {
+    @apply bg-white w-7 h-7 rounded-full p-2;
+  }
+
+  .btn-secondary svg path {
+    @apply stroke-black;
+  }
+
+  .btn-secondary:hover svg {
+    @apply bg-black;
+  }
+
+  .btn-secondary:hover svg path {
+    @apply stroke-white;
+  }
+
+  .card {
+    @apply flex flex-col  space-y-6 bg-secondary p-4 rounded-xl hover:bg-black hover:text-white transition duration-300 ease-in-out  h-full hover:scale-105;
+  }
+
+  .card__showcase {
+    @apply flex flex-col bg-white hover:cursor-pointer;
+  }
+
+  .card__showcase__image {
+    @apply  w-full;
+  }
+
+  .card__showcase:hover .card__showcase__image {
+    @apply  rounded-2xl scale-95 transition duration-300 ease-in-out;
+  }
+  /* card hover */
+  .card:hover {
+    @apply shadow-2xl shadow-black;
+  }
+
+  .card-image {
+    @apply w-20 h-20 bg-black rounded-full flex justify-center items-center;
+  }
+
+  .card-image svg path {
+    @apply stroke-white;
+  }
+
+  .group:hover .card-image svg path {
+    @apply stroke-black; /* Changes the stroke color on hover */
+  }
+
+  .group:hover .card-image {
+    @apply bg-white; /* Changes the stroke color on hover */
+  }
+  /* svg path stroke to white  */
+}

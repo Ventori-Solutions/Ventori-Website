@@ -1,0 +1,123 @@
+---
+interface Props {
+  title: string;
+  details: string;
+}
+
+const { title, details } = Astro.props as Props;
+---
+
+<div class="accordion group relative rounded-lg w-full">
+  <button
+    class="accordion__button flex w-full flex-1 items-center justify-between gap-2 p-3 text-left font-medium transition sm:px-4 text-white text-sm bg-accent rounded-t-lg"
+    type="button"
+    id={`${title} accordion menu button`}
+    aria-expanded="false"
+    aria-controls={`${title} accordion menu content`}
+  >
+    {title}
+
+    <div
+      aria-hidden="true"
+      class="accordion__chevron shrink-0 text-2xl  transition-transform"
+    >
+      +
+    </div>
+
+    <div
+    aria-hidden="true"
+    class="accordion__chevron_opened text-2xl shrink-0 transition-transform hidden"
+  >
+    -
+  </div>
+  </button>
+
+  <div
+    id={`${title} accordion menu content`}
+    aria-labelledby={`${title} accordion menu button`}
+    class="accordion__content max-h-0 overflow-hidden px-3 transition-all duration-300 ease-in-out sm:px-4 text-tertiary text-sm hidden bg-accent rounded-b-lg "
+  >
+    <p class="prose mb-4 mt-1 max-w-full border-t border-[#404047] py-4">
+      {details}
+    </p>
+  </div>
+</div>
+
+<script>
+function accordionSetup() {
+  const accordionMenus = document.querySelectorAll<HTMLElement>(".accordion");
+
+  accordionMenus.forEach((accordionMenu) => {
+    const accordionButton = accordionMenu.querySelector<HTMLElement>(".accordion__button");
+    const accordionChevron = accordionMenu.querySelector<HTMLElement>(".accordion__chevron");
+    const accordionContent = accordionMenu.querySelector<HTMLElement>(".accordion__content");
+    const accordionChevronOpened = accordionMenu.querySelector<HTMLElement>(".accordion__chevron_opened");
+
+    if (accordionButton && accordionContent && accordionChevron && accordionChevronOpened) {
+      accordionButton.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        // Check if the current accordion is already open
+        const isOpen = accordionMenu.classList.contains("active");
+
+        // Close all other accordions
+        accordionMenus.forEach((otherAccordion) => {
+          if (otherAccordion !== accordionMenu) {
+            const otherButton = otherAccordion.querySelector<HTMLElement>(".accordion__button");
+            const otherContent = otherAccordion.querySelector<HTMLElement>(".accordion__content");
+            const otherChevron = otherAccordion.querySelector<HTMLElement>(".accordion__chevron");
+            const otherChevronOpened = otherAccordion.querySelector<HTMLElement>(".accordion__chevron_opened");
+
+            if (otherButton && otherContent && otherChevron && otherChevronOpened) {
+              otherAccordion.classList.remove("active");
+              otherButton.setAttribute("aria-expanded", "false");
+              otherContent.style.maxHeight = "0px";
+              otherChevron.classList.remove("hidden");
+              otherChevronOpened.classList.add("hidden");
+
+              // Delay hiding content to allow close animation
+              setTimeout(() => {
+                if (!otherAccordion.classList.contains("active")) {
+                  otherContent.classList.add("hidden");
+                }
+              }, 300);
+            }
+          }
+        });
+
+        // Toggle the clicked accordion
+        accordionMenu.classList.toggle("active", !isOpen);
+        accordionButton.setAttribute("aria-expanded", !isOpen ? "true" : "false");
+
+        if (!isOpen) {
+          // Open the clicked accordion
+          accordionContent.classList.remove("hidden");
+          accordionContent.style.maxHeight = `${accordionContent.scrollHeight}px`;
+          accordionChevron.classList.add("hidden");
+          accordionChevronOpened.classList.remove("hidden");
+        } else {
+          // Close the clicked accordion
+          accordionContent.style.maxHeight = "0px";
+          accordionChevron.classList.remove("hidden");
+          accordionChevronOpened.classList.add("hidden");
+
+          // Delay hiding content to allow close animation
+          setTimeout(() => {
+            if (!accordionMenu.classList.contains("active")) {
+              accordionContent.classList.add("hidden");
+            }
+          }, 300);
+        }
+      });
+    }
+  });
+}
+
+// Run on initial page load
+accordionSetup();
+
+// Re-run on view transition navigation
+document.addEventListener("astro:after-swap", accordionSetup);
+
+
+</script>
