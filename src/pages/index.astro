@@ -105,9 +105,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
       icon: "arrow.svg",
       variant: "primary",
     }}
-  />
-
-   
+  />   
 
   <Process
     title="Process that moves<br> things forward"
@@ -135,8 +133,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
         image: "/src/assets/process-4.png",
       },
     ]}
-  />
- 
+  /> 
   
   <FAQ
     title="Frequently Asked Questions"
@@ -193,7 +190,6 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
       },
     ]}
   />
-
  
   <ShowCase
     title="Recent Showcase"
@@ -225,8 +221,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
       icon: "arrow.svg",
       variant: "secondary",
     }}
-  />
-  
+  />  
 
   <Pricing
     title="Pricing"
@@ -273,6 +268,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
       },
     ]}
   />
+
   <TestimonialSlider
     client:load
     testimonials={[
@@ -300,4 +296,42 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
     ]}
     ,
   /> 
+
+  <!-- Blur overlay with banner -->
+  <div class="blur-overlay">
+    <div class="construction-banner">
+      🚧 This site is under construction. Check back soon! 🚧
+    </div>
+</div>
 </Layout>
+
+<style>
+
+  /* Style for the blur overlay */
+  .blur-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px); /* Blurs the background */
+    background: rgba(0, 0, 0, 0.5); /* Adds a semi-transparent black overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999; /* Ensures it sits above all content */
+  }
+
+  /* Style for the banner */
+  .construction-banner {
+    text-align: center;
+    background: white;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    color: #333;
+  }
+
+</style>
