@@ -300,7 +300,24 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
   <!-- Blur overlay with banner -->
   <div class="blur-overlay">
     <div class="construction-banner">
-      🚧 This site is under construction. Check back soon! 🚧
+      <div style="display: flex; align-items: center; gap: 1rem"> 
+        <p class="desktop-only" style="font-size: 4rem;">🚧</p>
+
+        <div style="flex-direction: row;">
+          <p style="font-size: 1.25rem;">
+            We’re putting the final touches on something amazing. <br/><br/>
+            For inquiries contact us at
+          </p> 
+          <span style="font-size: 1.25rem; font-weight: 700;">info@ventori-solutions.com</span>
+        </div>
+
+        <p class="desktop-only" style="font-size: 4rem;">🚧</p>
+      </div>
+      <!--
+      🚧 
+      We’re putting the final touches on something amazing. Check back soon! 🚧 -->
+
+      
     </div>
 </div>
 </Layout>
@@ -332,6 +349,13 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
     font-family: Arial, sans-serif;
     font-size: 24px;
     color: #333;
+  }
+
+  /* Hide elements with the "desktop-only" class on smaller screens */
+  @media (max-width: 768px) {
+    .desktop-only {
+      display: none;
+    }
   }
 
 </style>
