@@ -33,7 +33,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
     </slot>
   </div>
   <div class="lg:w-[75%] max-w-[1440px] w-full lg:px-0 px-4 flex flex-row h-full justify-between items-center">
-    <Image src={images[logo]()} alt="Ventori" class="w-36 h-9 z-40" />
+    <Image src={images[logo]()} alt="Ventori" class="w-36 h-9 z-40" style="aspect-ratio: 1/1;" />
     <nav
       class="hidden lg:flex flex-row space-x-4 justify-center items-center z-10"
     >
